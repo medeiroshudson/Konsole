@@ -4,13 +4,13 @@ namespace Konsole.Services
 {
     public interface IHelloWorldService
     {
-        void HelloWorld();
+        void Greet(string name);
     }
     public class HelloWorldService : IHelloWorldService
     {
-        public void HelloWorld()
+        public void Greet(string name)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine($"Hey, {name}!");
         }
     }
 }
