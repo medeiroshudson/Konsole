@@ -1,4 +1,6 @@
 ﻿using System;
+using Konsole.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Konsole
 {
@@ -6,7 +8,26 @@ namespace Konsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // Create service collection and configure our services
+            var services = ConfigureServices();
+
+            // Generate a provider
+            var serviceProvider = services.BuildServiceProvider();
+
+            // Run Application
+            serviceProvider.GetService<Application>().Run();
+        }
+
+        private static IServiceCollection ConfigureServices()
+        {
+            IServiceCollection services = new ServiceCollection();
+
+            services.AddTransient<IHelloWorldService, HelloWorldService>();
+
+            // Register application entry point
+            services.AddTransient<Application>();
+
+            return services;
         }
     }
 }
