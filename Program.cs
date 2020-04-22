@@ -2,6 +2,8 @@
 using Konsole.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace Konsole
 {
@@ -25,6 +27,14 @@ namespace Konsole
 
             // load appsettings.json
             var config = LoadConfiguration();
+
+            // NLog logging
+            services.AddLogging(logging => 
+            {
+                logging.ClearProviders();
+                logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                logging.AddNLog("nlog.config");
+            });
 
             services.AddSingleton(config);
 
